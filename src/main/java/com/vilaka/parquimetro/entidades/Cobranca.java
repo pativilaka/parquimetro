@@ -2,6 +2,8 @@ package com.vilaka.parquimetro.entidades;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "tb_cobranca")
 public class Cobranca {
@@ -56,5 +58,18 @@ public class Cobranca {
 
     public void setRegistro(RegistroEstacionamento registro) {
         this.registro = registro;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cobranca cobranca = (Cobranca) o;
+        return Objects.equals(id, cobranca.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

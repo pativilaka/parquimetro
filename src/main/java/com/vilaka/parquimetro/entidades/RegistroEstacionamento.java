@@ -3,6 +3,7 @@ package com.vilaka.parquimetro.entidades;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tb_registro_estacionamento")
@@ -74,5 +75,18 @@ public class RegistroEstacionamento {
 
     public void setFilial(Filial filial) {
         this.filial = filial;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RegistroEstacionamento that = (RegistroEstacionamento) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tb_filial")
@@ -58,5 +59,18 @@ public class Filial {
 
     public void setRegistros(List<RegistroEstacionamento> registros) {
         this.registros = registros;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Filial filial = (Filial) o;
+        return Objects.equals(id, filial.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
