@@ -2,6 +2,9 @@ package com.vilaka.parquimetro.entidades;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "tb_filial")
 public class Filial {
@@ -12,13 +15,17 @@ public class Filial {
     private String nome;
     private String endereco;
 
+    @OneToMany(mappedBy = "filial", cascade = CascadeType.ALL)
+    private List<RegistroEstacionamento> registros = new ArrayList<>();
+
     public Filial() {
     }
 
-    public Filial(Long id, String nome, String endereco) {
+    public Filial(Long id, String nome, String endereco, List<RegistroEstacionamento> registros) {
         this.id = id;
         this.nome = nome;
         this.endereco = endereco;
+        this.registros = registros;
     }
 
     public Long getId() {
@@ -43,5 +50,13 @@ public class Filial {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public List<RegistroEstacionamento> getRegistros() {
+        return registros;
+    }
+
+    public void setRegistros(List<RegistroEstacionamento> registros) {
+        this.registros = registros;
     }
 }

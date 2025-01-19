@@ -12,13 +12,18 @@ public class Cobranca {
     private Double valor;
     private boolean pago;
 
+    @OneToOne
+    @MapsId
+    private RegistroEstacionamento registro;
+
     public Cobranca() {
     }
 
-    public Cobranca(Long id, Double valor, boolean pago) {
+    public Cobranca(Long id, Double valor, boolean pago, RegistroEstacionamento registro) {
         this.id = id;
         this.valor = valor;
         this.pago = pago;
+        this.registro = registro;
     }
 
     public Long getId() {
@@ -43,5 +48,13 @@ public class Cobranca {
 
     public void setPago(boolean pago) {
         this.pago = pago;
+    }
+
+    public RegistroEstacionamento getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(RegistroEstacionamento registro) {
+        this.registro = registro;
     }
 }

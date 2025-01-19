@@ -2,6 +2,8 @@ package com.vilaka.parquimetro.entidades;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,6 +15,9 @@ public class Cliente {
     private Long id;
     private String nome;
     private String telefone;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<Veiculo> veiculos = new ArrayList<>();
 
     public Cliente() {}
 
@@ -44,6 +49,10 @@ public class Cliente {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public List<Veiculo> getVeiculos() {
+        return veiculos;
     }
 
     @Override
