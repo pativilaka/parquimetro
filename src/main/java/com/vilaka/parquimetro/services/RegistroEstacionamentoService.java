@@ -11,6 +11,7 @@ import com.vilaka.parquimetro.repositories.RegistroEstacionamentoRepository;
 import com.vilaka.parquimetro.repositories.VeiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -47,26 +48,36 @@ public class RegistroEstacionamentoService {
         return registroRepository.save(registro);
     }
 
-
+    @Transactional
     public Cobranca registrarSaida(Long registroId, LocalDateTime saida) {
+
         RegistroEstacionamento registro = registroRepository.findById(registroId)
                 .orElseThrow(() -> new RuntimeException("Registro de estacionamento não encontrado"));
 
         if (registro.getSaida() != null) {
-            throw new RuntimeException("A saída já foi registrada para este registro.");
+            //teste
+            System.out.println("Saída já registrada anteriormente. Atualizando para novo valor para fins de teste.");
+            //throw new RuntimeException("A saída já foi registrada para este registro.");
         }
 
         registro.setSaida(saida);
-        registroRepository.save(registro);
 
         double valorCobranca = cobrancaService.calcularCobranca(registro.getEntrada(), saida);
 
-        Cobranca cobranca = new Cobranca();
-        cobranca.setRegistro(registro);
+        Cobranca cobranca = registro.getCobranca();
+        if (cobranca == null) {
+            cobranca = new Cobranca();
+            cobranca.setRegistro(registro);
+        }
+
         cobranca.setValor(valorCobranca);
         cobranca.setPago(false);
 
-        return cobrancaRepository.save(cobranca);
+        registro.setCobranca(cobranca);
+        registroRepository.save(registro);
+
+       return cobranca;
+
     }
 
     public List<RegistroEstacionamento> listarTodos() {

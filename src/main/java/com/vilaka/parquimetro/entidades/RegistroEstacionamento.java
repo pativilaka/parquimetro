@@ -29,12 +29,13 @@ public class RegistroEstacionamento {
     public RegistroEstacionamento() {
     }
 
-    public RegistroEstacionamento(Long id, LocalDateTime entrada, LocalDateTime saida, Veiculo veiculo, Filial filial) {
+    public RegistroEstacionamento(Long id, LocalDateTime entrada, LocalDateTime saida, Veiculo veiculo, Filial filial, Cobranca cobranca) {
         this.id = id;
         this.entrada = entrada;
         this.saida = saida;
         this.veiculo = veiculo;
         this.filial = filial;
+        this.cobranca = cobranca;
     }
 
     public Long getId() {
@@ -75,6 +76,14 @@ public class RegistroEstacionamento {
 
     public void setFilial(Filial filial) {
         this.filial = filial;
+    }
+
+    public Cobranca getCobranca() {
+        return cobranca;
+    }
+
+    public void setCobranca(Cobranca cobranca) {
+        this.cobranca = cobranca;
     }
 
     @Override
